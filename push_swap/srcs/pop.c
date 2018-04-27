@@ -10,5 +10,6 @@ int			pop(t_stack *stack)
 	stack->stack_content = tmp->next;
 	free(tmp->content);
 	free(tmp);
+	stack->size--;
 	return (pop_element);
 }

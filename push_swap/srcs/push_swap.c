@@ -8,12 +8,7 @@ int		main(int ac, char **av)
 	if (ac > 1)
 	{
 		initialize(ac - 1, &(av[1]));
-		int i = -1;
-		rev_rotate(g_a);
-		while (++i < ac - 1)
-		{
-			ft_printf("%d\n", pop(g_a));
-		}
+		quicksort(0, g_a->size - 1);
 	}
 	else
 		ft_printf("Error\n");

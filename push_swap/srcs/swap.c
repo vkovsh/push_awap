@@ -12,6 +12,6 @@ void		swap(t_stack *stack)
 		a = *((int *)(items->content));
 		b = *((int *)(items->next->content));
 		*((int *)(items->next->content)) = a;
-		*((int *)(items->next->content)) = b;
+		*((int *)(items->content)) = b;
 	}
 }

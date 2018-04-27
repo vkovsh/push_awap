@@ -21,8 +21,6 @@ void	initialize(int stack_size, char **args)
 		ft_printf("Error\n");
 		exit(0);
 	}
-	g_a->size = stack_size;
-	g_b->size = stack_size;
 	while (stack_size--)
 		push(g_a, ft_atoi(args[stack_size]));
 }

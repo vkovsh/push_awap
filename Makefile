@@ -16,15 +16,23 @@ INC					=	$(addprefix -I, $(INC_PATH))
 
 OBJ_NAME			=	$(SRC_NAME:.c=.o)
 
-SRC_NAME			=	push_swap.c		\
-						initialize.c	\
-						push.c			\
-						pop.c			\
-						push_pop.c		\
-						swap.c			\
-						is_empty.c 		\
-						rotate.c 		\
-						rev_rotate.c
+SRC_NAME			=	push_swap.c				\
+						initialize.c			\
+						push.c					\
+						pop.c					\
+						push_pop.c				\
+						swap.c					\
+						is_empty.c 				\
+						rotate.c 				\
+						rev_rotate.c			\
+						do_op.c					\
+						is_ascending.c			\
+						is_descending.c 		\
+						print_stack.c 			\
+						swap_i_j.c				\
+						get_operation_by_id.c	\
+						quicksort.c 			\
+						get.c
 
 all: $(NAME)
 

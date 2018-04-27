@@ -6,4 +6,5 @@ void    push(t_stack *stack, int element)
 
     new_elem = ft_lstnew(&element, sizeof(int));
     ft_lstadd(&(stack->stack_content), new_elem);
+    stack->size++;
 } 
