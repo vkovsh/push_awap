@@ -20,9 +20,8 @@ CC_FLAGS			=	-g -Wall -Werror -Wextra
 PS_PATH 			=	./pushswap/
 RAND_PATH			=	./randomizer/
 CHECKER_PATH		=	./checker_program/
-PS_SRC_PATH			=	$(PS_PATH)srcs/
 SHARE_PATH 			=	./share/
-INC_PATH			=	$(PS_PATH)includes/ $(LIBFTPRINTF_PATH)includes/ $(LIBFT_PATH)includes/
+INC_PATH			=	$(SHARE_PATH)includes/ $(LIBFTPRINTF_PATH)includes/ $(LIBFT_PATH)includes/
 OBJ_PATH 			=	./obj/
 PS_OBJ_PATH			=	$(OBJ_PATH)ps_obj/
 RAND_OBJ_PATH		=	$(OBJ_PATH)rand_obj/
@@ -92,7 +91,7 @@ $(RAND_BIN_NAME): $(RAND_OBJ) $(SHARE_OBJ)
 	@$(CC) -o $(RAND_BIN_NAME) $(SHARE_OBJ) $(RAND_OBJ) $(LIBFTPRINTF_PATH)libftprintf.a
 	@echo "Compiling" [ $(RAND_BIN_NAME) ]
 
-$(PS_OBJ_PATH)%.o: $(PS_SRC_PATH)%.c
+$(PS_OBJ_PATH)%.o: $(PS_PATH)%.c
 	@mkdir -p $(PS_OBJ_PATH)
 	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
 	@echo "Linking" [ $< ]
