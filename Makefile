@@ -12,12 +12,14 @@
 
 PS_BIN_NAME			=	push_swap
 RAND_BIN_NAME		=	rand
+CHECKER_BIN_NAME	=	checker
 
 CC 					=	gcc
 CC_FLAGS			=	-Wall -Werror -Wextra
 
 PS_PATH 			=	./pushswap/
 RAND_PATH			=	./randomizer/
+CHECKER_PATH		=	./checker_program/
 PS_SRC_PATH			=	$(PS_PATH)srcs/
 SHARE_PATH 			=	./share/
 INC_PATH			=	$(PS_PATH)includes/ $(LIBFTPRINTF_PATH)includes/ $(LIBFT_PATH)includes/
@@ -25,6 +27,7 @@ OBJ_PATH 			=	./obj/
 PS_OBJ_PATH			=	$(OBJ_PATH)ps_obj/
 RAND_OBJ_PATH		=	$(OBJ_PATH)rand_obj/
 SHARE_OBJ_PATH		=	$(OBJ_PATH)share_obj/
+CHECKER_OBJ_PATH	=	$(OBJ_PATH)checker_obj/
 LIBFTPRINTF_PATH	=	./libftprintf/
 LIBFT_PATH 			=	$(LIBFTPRINTF_PATH)/libft/
 
@@ -34,6 +37,8 @@ RAND_OBJ 			=	$(addprefix $(RAND_OBJ_PATH),$(RAND_OBJ_NAME))
 
 SHARE_OBJ			=	$(addprefix $(SHARE_OBJ_PATH),$(SHARE_OBJ_NAME))
 
+CHECKER_OBJ 		=	$(addprefix $(CHECKER_OBJ_PATH),$(CHECKER_OBJ_NAME))
+
 INC					=	$(addprefix -I, $(INC_PATH))
 
 PS_OBJ_NAME			=	$(PS_NAME:.c=.o)
@@ -41,6 +46,10 @@ PS_OBJ_NAME			=	$(PS_NAME:.c=.o)
 RAND_OBJ_NAME		=	$(RAND_NAME:.c=.o)
 
 SHARE_OBJ_NAME		=	$(SHARE_NAME:.c=.o)
+
+CHECKER_OBJ_NAME	=	$(CHECKER_NAME:.c=.o)
+
+CHECKER_NAME		=	checker.c
 
 PS_NAME				=	push_swap.c
 
@@ -65,7 +74,12 @@ SHARE_NAME			=	initialize.c			\
 						get_min_max.c			\
 						in_division.c				
 
-all: $(PS_BIN_NAME) $(RAND_BIN_NAME)
+all: $(PS_BIN_NAME) $(RAND_BIN_NAME) $(CHECKER_BIN_NAME)
+
+$(CHECKER_BIN_NAME): $(CHECKER_OBJ) $(SHARE_OBJ)
+	@make -C $(LIBFTPRINTF_PATH)
+	@$(CC) -o $(CHECKER_BIN_NAME) $(SHARE_OBJ) $(CHECKER_OBJ) $(LIBFTPRINTF_PATH)libftprintf.a
+	@echo "Compiling" [ $(CHECKER_BIN_NAME) ]
 
 $(PS_BIN_NAME): $(PS_OBJ) $(SHARE_OBJ)
 	@make -C $(LIBFTPRINTF_PATH)
@@ -92,17 +106,25 @@ $(SHARE_OBJ_PATH)%.o: $(SHARE_PATH)%.c
 	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
 	@echo "Linking" [ $< ]
 
+$(CHECKER_OBJ_PATH)%.o: $(CHECKER_PATH)%.c
+	@mkdir -p $(CHECKER_OBJ_PATH)
+	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
+	@echo "Linking" [ $< ]
+
 clean:
 	@make -C $(LIBFTPRINTF_PATH) clean
 	@rm -rf $(OBJ_PATH)
 	@echo "Cleaning obj [ $(PS_BIN_NAME) ]..."
 	@echo "Cleaning obj [ $(RAND_BIN_NAME) ]..."
+	@echo "Cleaning obj [ $(CHECKER_BIN_NAME) ]..."
 
 fclean: clean
 	@make -C $(LIBFTPRINTF_PATH) fclean
 	@rm -f $(PS_BIN_NAME)
 	@rm -f $(RAND_BIN_NAME)
+	@rm -f $(CHECKER_BIN_NAME)
 	@echo "Remove [ $(PS_BIN_NAME) ]..."
 	@echo "Remove [ $(RAND_BIN_NAME) ]..."
+	@echo "Remove [ $(CHECKER_BIN_NAME) ]..."
 
 re: fclean all
