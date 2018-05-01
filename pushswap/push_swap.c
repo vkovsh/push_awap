@@ -249,11 +249,11 @@ int		main(int ac, char **av)
 					do_op(pa);
 				quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
 				*/
-			}
+			}/*
 			if (is_ascending(g_a))
 				ft_printf("OK\n");
 			else
-				ft_printf("Error\n");
+				ft_printf("Error\n");*/
 			
 		}
 		else

@@ -13,6 +13,9 @@
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 # include "ft_printf.h"
+# define ROTATE_BOTH() rotate(g_a); rotate(g_b)
+# define REV_ROTATE_BOTH() rev_rotate(g_a); rev_rotate(g_b)
+# define SWAP_BOTH() swap(g_a); swap(g_b)
 
 extern struct s_stack	*g_a;
 extern struct s_stack	*g_b;

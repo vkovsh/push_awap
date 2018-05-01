@@ -9,7 +9,8 @@
                 "${workspaceFolder}/push_swap/includes",
                 "${workspaceFolder}/libftprintf/includes",
                 "${workspaceFolder}/libftprintf/libft/includes",
-                "${workspaceFolder}/pushswap/includes"
+                "${workspaceFolder}/pushswap/includes",
+                "${workspaceFolder}/share/includes"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
