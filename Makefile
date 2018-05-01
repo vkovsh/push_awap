@@ -76,6 +76,7 @@ clean:
 	@echo "Cleaning obj [ $(NAME2) ]..."
 
 fclean: clean
+	@make -C $(LIBFTPRINTF_PATH) fclean
 	@rm -f $(NAME2)
 	@rm -f $(NAME)
 	@echo "Remove [ $(NAME) ]..."
