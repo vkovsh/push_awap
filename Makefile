@@ -1,30 +1,52 @@
-NAME				=	push-swap
-NAME2				=	rand
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vkovsh <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/05/01 11:25:01 by vkovsh            #+#    #+#              #
+#    Updated: 2018/05/01 11:25:07 by vkovsh           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+PS_BIN_NAME			=	push_swap
+RAND_BIN_NAME		=	rand
 
 CC 					=	gcc
 CC_FLAGS			=	-Wall -Werror -Wextra
 
-PS_PATH 			=	./push_swap/
+PS_PATH 			=	./pushswap/
 RAND_PATH			=	./randomizer/
 PS_SRC_PATH			=	$(PS_PATH)srcs/
+SHARE_PATH 			=	./share/
 INC_PATH			=	$(PS_PATH)includes/ $(LIBFTPRINTF_PATH)includes/ $(LIBFT_PATH)includes/
-OBJ_PATH			=	./obj/
-OBJ2_PATH			=	./obj2/
+OBJ_PATH 			=	./obj/
+PS_OBJ_PATH			=	$(OBJ_PATH)ps_obj/
+RAND_OBJ_PATH		=	$(OBJ_PATH)rand_obj/
+SHARE_OBJ_PATH		=	$(OBJ_PATH)share_obj/
 LIBFTPRINTF_PATH	=	./libftprintf/
 LIBFT_PATH 			=	$(LIBFTPRINTF_PATH)/libft/
 
-OBJ					=	$(addprefix $(OBJ_PATH),$(OBJ_NAME))
+PS_OBJ				=	$(addprefix $(PS_OBJ_PATH),$(PS_OBJ_NAME))
 
-OBJ2 				=	$(addprefix $(OBJ2_PATH),$(OBJ2_NAME))
+RAND_OBJ 			=	$(addprefix $(RAND_OBJ_PATH),$(RAND_OBJ_NAME))
+
+SHARE_OBJ			=	$(addprefix $(SHARE_OBJ_PATH),$(SHARE_OBJ_NAME))
 
 INC					=	$(addprefix -I, $(INC_PATH))
 
-OBJ_NAME			=	$(SRC_NAME:.c=.o)
+PS_OBJ_NAME			=	$(PS_NAME:.c=.o)
 
-OBJ2_NAME			=	$(RAND_NAME:.c=.o)
+RAND_OBJ_NAME		=	$(RAND_NAME:.c=.o)
 
-SRC_NAME			=	push_swap.c				\
-						initialize.c			\
+SHARE_OBJ_NAME		=	$(SHARE_NAME:.c=.o)
+
+PS_NAME				=	push_swap.c
+
+RAND_NAME			=	randomizer.c
+
+SHARE_NAME			=	initialize.c			\
 						push.c					\
 						pop.c					\
 						push_pop.c				\
@@ -43,42 +65,44 @@ SRC_NAME			=	push_swap.c				\
 						get_min_max.c			\
 						in_division.c				
 
-RAND_NAME			=	randomizer.c
+all: $(PS_BIN_NAME) $(RAND_BIN_NAME)
 
-all: $(NAME) $(NAME2)
-
-$(NAME): $(OBJ)
+$(PS_BIN_NAME): $(PS_OBJ) $(SHARE_OBJ)
 	@make -C $(LIBFTPRINTF_PATH)
-	@$(CC) -o $(NAME) $(OBJ) $(LIBFTPRINTF_PATH)libftprintf.a
-	@echo "Compiling" [ $(NAME) ]
+	@$(CC) -o $(PS_BIN_NAME) $(SHARE_OBJ) $(PS_OBJ) $(LIBFTPRINTF_PATH)libftprintf.a
+	@echo "Compiling" [ $(PS_BIN_NAME) ]
 
-$(NAME2): $(OBJ2)
+$(RAND_BIN_NAME): $(RAND_OBJ) $(SHARE_OBJ)
 	@make -C $(LIBFTPRINTF_PATH)
-	@$(CC) -o $(NAME2) $(OBJ2) $(LIBFTPRINTF_PATH)libftprintf.a
-	@echo "Compiling" [ $(NAME2) ]
+	@$(CC) -o $(RAND_BIN_NAME) $(SHARE_OBJ) $(RAND_OBJ) $(LIBFTPRINTF_PATH)libftprintf.a
+	@echo "Compiling" [ $(RAND_BIN_NAME) ]
 
-$(OBJ_PATH)%.o: $(PS_SRC_PATH)%.c
-	@mkdir -p $(OBJ_PATH)
+$(PS_OBJ_PATH)%.o: $(PS_SRC_PATH)%.c
+	@mkdir -p $(PS_OBJ_PATH)
 	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
 	@echo "Linking" [ $< ]
 
-$(OBJ2_PATH)%.o: $(RAND_PATH)%.c
-	@mkdir -p $(OBJ2_PATH)
+$(RAND_OBJ_PATH)%.o: $(RAND_PATH)%.c
+	@mkdir -p $(RAND_OBJ_PATH)
+	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
+	@echo "Linking" [ $< ]
+
+$(SHARE_OBJ_PATH)%.o: $(SHARE_PATH)%.c
+	@mkdir -p $(SHARE_OBJ_PATH)
 	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
 	@echo "Linking" [ $< ]
 
 clean:
 	@make -C $(LIBFTPRINTF_PATH) clean
 	@rm -rf $(OBJ_PATH)
-	@rm -rf $(OBJ2_PATH)
-	@echo "Cleaning obj [ $(NAME) ]..."
-	@echo "Cleaning obj [ $(NAME2) ]..."
+	@echo "Cleaning obj [ $(PS_BIN_NAME) ]..."
+	@echo "Cleaning obj [ $(RAND_BIN_NAME) ]..."
 
 fclean: clean
 	@make -C $(LIBFTPRINTF_PATH) fclean
-	@rm -f $(NAME2)
-	@rm -f $(NAME)
-	@echo "Remove [ $(NAME) ]..."
-	@echo "Remove [ $(NAME2) ]..."
+	@rm -f $(PS_BIN_NAME)
+	@rm -f $(RAND_BIN_NAME)
+	@echo "Remove [ $(PS_BIN_NAME) ]..."
+	@echo "Remove [ $(RAND_BIN_NAME) ]..."
 
 re: fclean all
