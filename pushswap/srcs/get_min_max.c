@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "pushswap.h"
 
 int         get_min(t_stack *s)
 {

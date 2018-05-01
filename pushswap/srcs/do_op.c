@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "pushswap.h"
 struct s_stack *g_a;
 struct s_stack *g_b;
 int ops;

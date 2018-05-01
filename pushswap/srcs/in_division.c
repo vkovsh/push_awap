@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "pushswap.h"
 
 int     in_division(int board, t_stack *s)
 {

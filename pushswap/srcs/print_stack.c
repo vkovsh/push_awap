@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "pushswap.h"
 
 void        print_stack(t_stack *stack)
 {

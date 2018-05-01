@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "pushswap.h"
 
 static void	inner_cost_one(int min)
 {

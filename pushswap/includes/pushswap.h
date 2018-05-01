@@ -1,11 +1,17 @@
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 # include "ft_printf.h"
-# include "stack.h"
 
 extern struct s_stack   *g_a;
 extern struct s_stack   *g_b;
 extern int ops;
+
+typedef struct  s_stack
+{
+    size_t      size;
+    size_t      head_pointer;
+    t_list      *stack_content;
+}               t_stack;
 
 typedef enum	e_operation
 {
@@ -38,7 +44,6 @@ int             min_position(t_stack *stack, int *min);
 int             max_position(t_stack *stack, int *max);
 void            print_stack(t_stack *stack);
 void            swap_i_j(int i, int j);
-void            swap_i_j_in_b(int i, int j);
 int             get(t_stack *stack, int i);
 const char      *get_operation_by_id(t_operation operation);
 void            quicksort_ascending(t_stack *s, int l, int h, void (*f)(int i, int j));

@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "pushswap.h"
 
 static int  partition_ascending(t_stack *s, int l, int h, void (*f)(int i, int j))
 {

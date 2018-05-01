@@ -40,7 +40,6 @@ SRC_NAME			=	push_swap.c				\
 						get_operation_by_id.c	\
 						quicksort.c 			\
 						get.c					\
-						swap_i_j_in_b.c			\
 						get_min_max.c			\
 						in_division.c				
 
