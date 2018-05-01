@@ -27,6 +27,7 @@ typedef struct	s_stack
 
 typedef enum	e_operation
 {
+	WRONG_ID = -1,
     sa,
     sb,
     ss,
@@ -55,6 +56,7 @@ void			print_stack(t_stack *stack);
 void			swap_i_j(int i, int j);
 int				get(t_stack *stack, int i);
 const char		*get_operation_by_id(t_operation operation);
+t_operation		get_id_by_operation(const char *op_name);
 void			quicksort_ascending(t_stack *s, int l, int h, void (*f)(int i, int j));
 void			quicksort_descending(t_stack *s, int l, int h, void (*f)(int i, int j));
 int				get_max(t_stack *s);

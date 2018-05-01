@@ -22,6 +22,7 @@ int			main(int ac, char **av)
 	int		limit;
 	int		*output;
 	int		tmp;
+	char 	*arg;
 
 	if (ac == 2)
 	{
@@ -29,6 +30,7 @@ int			main(int ac, char **av)
 			ft_printf("Error\n");
 		else
 		{
+			arg = ft_strdup("");
     		srand((unsigned)time(&t));
 			if (ft_aredigits(av[1]))
 			{
@@ -50,9 +52,10 @@ int			main(int ac, char **av)
 				i = -1;
 				while (++i < count)
 				{
-					ft_printf("%d ", output[i]);
+					arg = ft_strjoin_free(arg, ft_itoa(output[i]), TRUE, TRUE);
+					arg = ft_strjoin_free(arg, " ", TRUE, FALSE);
 				}
-				ft_printf("\n");
+				ft_printf("%s", arg);
 			}
 		}
 	}

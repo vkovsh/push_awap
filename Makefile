@@ -15,7 +15,7 @@ RAND_BIN_NAME		=	rand
 CHECKER_BIN_NAME	=	checker
 
 CC 					=	gcc
-CC_FLAGS			=	-Wall -Werror -Wextra
+CC_FLAGS			=	-g -Wall -Werror -Wextra
 
 PS_PATH 			=	./pushswap/
 RAND_PATH			=	./randomizer/
@@ -72,7 +72,8 @@ SHARE_NAME			=	initialize.c			\
 						quicksort.c 			\
 						get.c					\
 						get_min_max.c			\
-						in_division.c				
+						in_division.c			\
+						get_id_by_operation.c				
 
 all: $(PS_BIN_NAME) $(RAND_BIN_NAME) $(CHECKER_BIN_NAME)
 

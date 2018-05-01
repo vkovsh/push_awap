@@ -21,12 +21,16 @@ static void	inner_cost_one(int min)
 		while (++index < min)
 		{
 			do_op(pa);
-			if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
+			if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+				(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+				do_op(ss);
+			else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
 				do_op(sa);
 		}
 	}
 	else
 	{
+		ft_printf("ne ok");
 		index = -1;
 		while (++index < (int)(g_a->size) - min)
 			do_op(rra);
@@ -55,7 +59,12 @@ void	swap_i_j(int i, int j)
 	if (i == j)
 		return ;
 	if (i <= 1 && j <= 1)
-		do_op(sa);
+	{
+		if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+			do_op(ss);
+		else
+			do_op(sa);
+	}
 	else
 	{
 		min = (i < j) ? i : j;

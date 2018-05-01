@@ -12,7 +12,24 @@
 
 #include "pushswap.h"
 
-int		main(void)
+int				main(int ac, char **av)
 {
+	char		*op_str;
+	t_operation	op;
+
+	op_str = NULL;
+	if (ac < 2)
+		ft_printf("Error\n");
+	else
+	{
+		initialize(ac - 1, &(av[1]));
+		while (get_next_line(0, &op_str) == 1 && *op_str)
+			if ((op = get_id_by_operation(op_str)) != WRONG_ID)
+				do_op(op);
+		if (is_ascending(g_a))
+			ft_printf("OK\n");
+		else
+			ft_printf("KO\n");
+	}
 	return (0);
 }
