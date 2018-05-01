@@ -5,6 +5,7 @@
 
 extern struct s_stack   *g_a;
 extern struct s_stack   *g_b;
+extern int ops;
 
 typedef enum	e_operation
 {
@@ -37,7 +38,12 @@ int             min_position(t_stack *stack, int *min);
 int             max_position(t_stack *stack, int *max);
 void            print_stack(t_stack *stack);
 void            swap_i_j(int i, int j);
-int             get(int i);
+void            swap_i_j_in_b(int i, int j);
+int             get(t_stack *stack, int i);
 const char      *get_operation_by_id(t_operation operation);
-void            quicksort(int l, int h);
+void            quicksort_ascending(t_stack *s, int l, int h, void (*f)(int i, int j));
+void            quicksort_descending(t_stack *s, int l, int h, void (*f)(int i, int j));
+int             get_max(t_stack *s);
+int             get_min(t_stack *s);
+int             in_division(int board, t_stack *s);
 #endif

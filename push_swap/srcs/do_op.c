@@ -1,9 +1,11 @@
 #include "push_swap.h"
 struct s_stack *g_a;
 struct s_stack *g_b;
+int ops;
 
 void	do_op(t_operation op)
 {
+	ops++;
 	if (op == sa)
 		swap(g_a);
 	else if (op == sb)
@@ -35,10 +37,9 @@ void	do_op(t_operation op)
 		rev_rotate(g_a);
 		rev_rotate(g_b);
 	}
-	/*
-	ft_printf("-------------------\n");
+	//ft_printf("-------------------\n");
 	ft_printf("%s\n", get_operation_by_id(op));
-	ft_printf("%s\n", "Stack a");
+	/*ft_printf("%s\n", "Stack a");
 	print_stack(g_a);
 	ft_printf("%s\n", "Stack b");
 	print_stack(g_b);

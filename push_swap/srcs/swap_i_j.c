@@ -1,5 +1,48 @@
 #include "push_swap.h"
-struct s_stack *g_a;
+
+static void	inner_cost_one(int min)
+{
+	int	index;
+
+	if (min < (int)(g_a->size) / 2 + 1)
+	{
+		index = -1;
+		while (++index < min)
+		{
+			do_op(pb);
+			if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+				do_op(sb);
+		}
+		if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+			do_op(ss);
+		else
+			do_op(sa);
+		index = -1;
+		while (++index < min)
+		{
+			do_op(pa);
+			if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
+				do_op(sa);
+		}
+	}
+	else
+	{
+		index = -1;
+		while (++index < (int)(g_a->size) - min)
+			do_op(rra);
+		do_op(sa);
+		index = -1;
+		while (++index < (int)(g_a->size) - min)
+			do_op(ra);
+	}
+}
+
+static void	outer_cost_one(void)
+{
+	do_op(rra);
+	do_op(sa);
+	do_op(ra);
+}
 
 void	swap_i_j(int i, int j)
 {
@@ -9,65 +52,55 @@ void	swap_i_j(int i, int j)
 	int	outer_cost;
 	int	index;
 
-	if (i < 0 || j < 0 ||
-		i >= (int)(g_a->size) || j >= (int)(g_a->size))
-		exit(0);
 	if (i == j)
 		return ;
 	if (i <= 1 && j <= 1)
-	{
 		do_op(sa);
-	}
 	else
 	{
 		min = (i < j) ? i : j;
 		max = (i > j) ? i : j;
-		inner_cost = max - min;
-		outer_cost = min + g_a->size - max;
-		if (inner_cost == 1)
+		if ((inner_cost = max - min) == 1)
+			inner_cost_one(min);
+		else if ((outer_cost = min + g_a->size - max) == 1)
+			outer_cost_one();
+		else if (inner_cost < outer_cost)
 		{
 			index = -1;
 			while (++index < min)
 			{
 				do_op(pb);
+				if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+					do_op(sb);
 			}
-			do_op(sa);
-			index = -1;
-			while (++index < min)
-			{
-				do_op(pa);
-			}
-		}
-		else if (outer_cost == 1)
-		{
-			do_op(rra);
-			do_op(sa);
 			do_op(ra);
-		}
-		else if (inner_cost <= outer_cost)
-		{
-			index = -1;
-			while (++index <= min)
+			index = 0;
+			while (++index < inner_cost)
 			{
 				do_op(pb);
+				if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+					do_op(sb);
 			}
+			do_op(rra);
+			if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+				do_op(ss);
+			else
+				do_op(sa);
+			do_op(ra);
 			index = 0;
 			while (++index < inner_cost)
-			{
-				do_op(ra);
-			}
-			do_op(pa);
-			do_op(sa);
-			do_op(pb);
-			index = 0;
-			while (++index < inner_cost)
-			{
-				do_op(rra);
-			}
-			index = -1;
-			while (++index <= min)
 			{
 				do_op(pa);
+				if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
+					do_op(sa);
+			}
+			do_op(rra);
+			index = -1;
+			while (++index < min)
+			{
+				do_op(pa);
+				if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
+					do_op(sa);
 			}
 		}
 		else
@@ -78,6 +111,8 @@ void	swap_i_j(int i, int j)
 			while (++index < forward_items)
 			{
 				do_op(pb);
+				if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+					do_op(sb);
 			}
 			index = -1;
 			while (++index < back_items)
@@ -98,6 +133,8 @@ void	swap_i_j(int i, int j)
 			while (++index < forward_items)
 			{
 				do_op(pa);
+				if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
+					do_op(sa);
 			}
 		}
 	}

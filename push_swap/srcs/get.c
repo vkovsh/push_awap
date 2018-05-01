@@ -1,13 +1,11 @@
 #include "push_swap.h"
 
-struct s_stack *g_a;
-
-int			get(int i)
+int			get(t_stack *stack, int i)
 {
     t_list  *items;
 	int		index;
 
-	items = g_a->stack_content;
+	items = stack->stack_content;
 	index = -1;
 	while (++index < i && items)
 	{
