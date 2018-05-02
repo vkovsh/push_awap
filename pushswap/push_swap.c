@@ -1,37 +1,6 @@
 #include "pushswap.h"
 
-struct s_stack   *g_a;
-struct s_stack   *g_b;
-int	ops;
-
-t_bool	is_signed_decimal(char *str)
-{
-	if (*str == '-' || *str == '+')
-		str++;
-	if (!ft_aredigits(str))
-		return (FALSE);
-	return (TRUE);
-}
-
-t_bool	validate_stack_args(int size, char **args)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < size)
-	{
-		j = i;
-		if (!(is_signed_decimal(args[i])))
-			return (FALSE);
-		while (++j < size)
-		{
-			if (!ft_strcmp(args[i], args[j]))
-				return (FALSE);
-		}
-	}
-	return (TRUE);
-}
+int log_descriptor;
 
 int		get_average(t_stack *s)
 {
@@ -159,6 +128,7 @@ int		main(int ac, char **av)
 	{
 		if (validate_stack_args(ac - 1, &(av[1])))
 		{
+			log_descriptor = 1;
 			initialize(ac - 1, &(av[1]));
 			if (g_a->size <= 20)
 				quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);

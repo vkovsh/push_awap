@@ -13,13 +13,11 @@
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 # include "ft_printf.h"
-# define ROTATE_BOTH() rotate(g_a); rotate(g_b)
-# define REV_ROTATE_BOTH() rev_rotate(g_a); rev_rotate(g_b)
-# define SWAP_BOTH() swap(g_a); swap(g_b)
 
 extern struct s_stack	*g_a;
 extern struct s_stack	*g_b;
 extern int ops;
+extern int log_descriptor;
 
 typedef struct	s_stack
 {
@@ -65,4 +63,5 @@ void			quicksort_descending(t_stack *s, int l, int h, void (*f)(int i, int j));
 int				get_max(t_stack *s);
 int				get_min(t_stack *s);
 int				in_division(int board, t_stack *s);
+t_bool		    validate_stack_args(int size, char **args);
 #endif

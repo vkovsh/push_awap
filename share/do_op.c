@@ -12,16 +12,34 @@
 
 #include "pushswap.h"
 
-void	do_op(t_operation op)
+int log_descriptor;
+
+static inline void	swap_both(void)
+{
+	swap(g_a);
+	swap(g_b);
+}
+
+static inline void	rotate_both(void)
+{
+	rotate(g_a);
+	rotate(g_b);
+}
+
+static inline void	rev_rotate_both(void)
+{
+	rev_rotate(g_a);
+	rev_rotate(g_b);
+}
+
+void				do_op(t_operation op)
 {
 	if (op == sa)
 		swap(g_a);
 	else if (op == sb)
 		swap(g_b);
 	else if (op == ss)
-	{
-		SWAP_BOTH();
-	}
+		swap_both();
 	else if (op == pa)
 		push_pop(g_a, g_b);
 	else if (op == pb)
@@ -31,17 +49,12 @@ void	do_op(t_operation op)
 	else if (op == rb)
 		rotate(g_b);
 	else if (op == rr)
-	{
-		ROTATE_BOTH();
-	}
+		rotate_both();
 	else if (op == rra)
 		rev_rotate(g_a);
 	else if (op == rrb)
 		rev_rotate(g_b);
 	else if (op == rrr)
-	{
-		REV_ROTATE_BOTH();
-	}
-	ft_printf("%s\n", get_operation_by_id(op));
-	print_stack(g_a);
+		rev_rotate_both();
+	ft_dprintf(log_descriptor, "%s\n", get_operation_by_id(op));
 }
