@@ -9,9 +9,9 @@ void        print_stack(t_stack *stack)
     i = 0;
     while (items)
     {
-        ft_printf("%d%[*]s%[*]{*}d\n", i, 0x0f00f0,
-            "   --->   ",
-            0xff0000, 0x00ff00, *((int *)(items->content)));
+        ft_dprintf(log_descriptor,
+            "%d%s%d\n", i, "   --->   ",
+            *((int *)(items->content)));
         i++;
         items = items->next;
     }

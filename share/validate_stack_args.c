@@ -48,18 +48,24 @@ t_bool					validate_stack_args(int size, char **args)
 {
 	int					i;
 	int					j;
+	char				*trimmed_i;
+	char				*trimmed_j;
 
 	i = -1;
 	while (++i < size)
 	{
 		j = i;
-		if (!(is_signed_int(args[i])))
+		trimmed_i = ft_strtrim(args[i]);
+		if (!(is_signed_int(trimmed_i)))
 			return (FALSE);
 		while (++j < size)
 		{
-			if (!ft_strcmp(args[i], args[j]))
+			trimmed_j = ft_strtrim(args[j]);
+			if (!ft_strcmp(trimmed_i, trimmed_j))
 				return (FALSE);
+			ft_strdel(&trimmed_j);
 		}
+		ft_strdel(&trimmed_i);
 	}
 	return (TRUE);
 }

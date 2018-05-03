@@ -13,6 +13,8 @@
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 # include "ft_printf.h"
+# include <fcntl.h>
+# include <time.h>
 
 extern struct s_stack	*g_a;
 extern struct s_stack	*g_b;

@@ -72,7 +72,8 @@ SHARE_NAME			=	initialize.c			\
 						get.c					\
 						get_min_max.c			\
 						in_division.c			\
-						get_id_by_operation.c				
+						get_id_by_operation.c	\
+						validate_stack_args.c			
 
 all: $(PS_BIN_NAME) $(RAND_BIN_NAME) $(CHECKER_BIN_NAME)
 
