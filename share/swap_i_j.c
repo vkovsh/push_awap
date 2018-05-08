@@ -26,11 +26,13 @@ static void	inner_cost_one(int min)
 				do_op(ss);
 			else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
 				do_op(sa);
+			else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+				do_op(sb);
 		}
 	}
 	else
 	{
-		ft_printf("ne ok");
+		//ft_printf("ne ok");
 		index = -1;
 		while (++index < (int)(g_a->size) - min)
 			do_op(rra);
@@ -43,8 +45,12 @@ static void	inner_cost_one(int min)
 
 static void	outer_cost_one(void)
 {
+	//ft_printf("ne ok");
 	do_op(rra);
-	do_op(sa);
+	if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+		do_op(ss);
+	else
+		do_op(sa);
 	do_op(ra);
 }
 
@@ -56,6 +62,7 @@ void	swap_i_j(int i, int j)
 	int	outer_cost;
 	int	index;
 
+	//ft_printf("swap: %d %d\n", i , j);
 	if (i == j)
 		return ;
 	if (i <= 1 && j <= 1)
@@ -147,4 +154,5 @@ void	swap_i_j(int i, int j)
 			}
 		}
 	}
+	//ft_printf("end swap: %d %d\n", i, j);
 }

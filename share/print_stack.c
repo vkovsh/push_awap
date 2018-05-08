@@ -10,7 +10,7 @@ void        print_stack(t_stack *stack)
     while (items)
     {
         ft_dprintf(log_descriptor,
-            "%d%s%d\n", i, "   --->   ",
+            "%10d%10s%10d\n", i, "--->",
             *((int *)(items->content)));
         i++;
         items = items->next;

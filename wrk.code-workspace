@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"files.associations": {
-			"limits": "c"
+			"limits": "c",
+			"initializer_list": "c"
 		}
 	}
 }
