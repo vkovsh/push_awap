@@ -10,8 +10,9 @@ static void	inner_cost_one(int min)
 		while (++index < min)
 		{
 			do_op(pb);
-			if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-				do_op(sb);
+			if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+					(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+					do_op(ss);
 		}
 		if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
 			do_op(ss);
@@ -24,15 +25,10 @@ static void	inner_cost_one(int min)
 			if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
 				(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
 				do_op(ss);
-			else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-				do_op(sa);
-			else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-				do_op(sb);
 		}
 	}
 	else
 	{
-		//ft_printf("ne ok");
 		index = -1;
 		while (++index < (int)(g_a->size) - min)
 			do_op(rra);
@@ -45,7 +41,6 @@ static void	inner_cost_one(int min)
 
 static void	outer_cost_one(void)
 {
-	//ft_printf("ne ok");
 	do_op(rra);
 	if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
 		do_op(ss);
@@ -86,16 +81,18 @@ void	swap_i_j(int i, int j)
 			while (++index < min)
 			{
 				do_op(pb);
-				if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-					do_op(sb);
+				if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+					(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+					do_op(ss);
 			}
 			do_op(ra);
 			index = 0;
 			while (++index < inner_cost)
 			{
 				do_op(pb);
-				if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-					do_op(sb);
+				if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+					(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+					do_op(ss);
 			}
 			do_op(rra);
 			if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
@@ -107,16 +104,18 @@ void	swap_i_j(int i, int j)
 			while (++index < inner_cost)
 			{
 				do_op(pa);
-				if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-					do_op(sa);
+				if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+					(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+					do_op(ss);
 			}
 			do_op(rra);
 			index = -1;
 			while (++index < min)
 			{
 				do_op(pa);
-				if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-					do_op(sa);
+				if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+					(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+					do_op(ss);
 			}
 		}
 		else
@@ -127,8 +126,9 @@ void	swap_i_j(int i, int j)
 			while (++index < forward_items)
 			{
 				do_op(pb);
-				if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-					do_op(sb);
+				if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+					(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+					do_op(ss);
 			}
 			index = -1;
 			while (++index < back_items)
@@ -149,8 +149,9 @@ void	swap_i_j(int i, int j)
 			while (++index < forward_items)
 			{
 				do_op(pa);
-				if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-					do_op(sa);
+				if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+					(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+					do_op(ss);
 			}
 		}
 	}

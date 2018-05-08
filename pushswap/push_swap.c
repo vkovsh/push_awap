@@ -34,10 +34,10 @@ void	average_division_a(int aver, int count)
 		if(get(g_a, 0) <= aver)
 		{
 			do_op(pb);
-			/*if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+			if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
 				(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
 				do_op(ss);
-			else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+			/*else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
 				do_op(sb);
 			else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
 				do_op(sa);*/
@@ -59,13 +59,26 @@ void	average_division_a(int aver, int count)
 			mawaru++;
 		}
 	}
+	if (g_a->size && get(g_a, 0) <= aver)
+		do_op(pb);
+	if (g_a->size >= 2 && get(g_a, 1) <= aver)
+	{
+		do_op(ra);
+		mawaru++;
+		do_op(pb);
+		if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+			(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+			do_op(ss);
+	}
 	//ft_printf("mawaru = %d\n", mawaru);
 	if (mawaru <= (int)(g_a->size / 3))
 	{
-		//ft_printf("mawaru");
+		//ft_printf("mawaru = %d\n", mawaru);
 		while (mawaru--)
 			do_op(rra);
 	}
+	//else
+		//ft_printf("mawaru = %d\n", mawaru);
 }
 
 void	average_division_b(int aver, int count)
@@ -81,10 +94,10 @@ void	average_division_b(int aver, int count)
 		if(get(g_b, 0) >= aver)
 		{
 			do_op(pa);
-			/*if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+			if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
 				(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
 				do_op(ss);
-			else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
+			/*else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
 				do_op(sb);
 			else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
 				do_op(sa);*/
@@ -106,12 +119,25 @@ void	average_division_b(int aver, int count)
 			mawaru++;
 		}
 	}
+	if (g_b->size && get(g_b, 0) >= aver)
+		do_op(pa);
+	if (g_b->size >= 2 && get(g_b, 1) >= aver)
+	{
+		do_op(rb);
+		mawaru++;
+		do_op(pa);
+		if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+			(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+			do_op(ss);
+	}
 	if (mawaru <= (int)(g_b->size) / 3)
 	{
-		//ft_printf("mawaru");
+		//ft_printf("mawaru = %d\n", mawaru);
 		while (mawaru--)
 			do_op(rrb);
 	}
+	//else
+		//ft_printf("mawaru = %d\n", mawaru);
 }
 
 int		get_optimal_division(t_stack *s)
@@ -143,7 +169,11 @@ int		get_fixed_division(t_stack *s, int number)
 	int	max;
 
 	max = get_max(s);
-	while (in_division(max, s) <= number)
+	while (in_division(max, s) < number)
+	{
+		max--;
+	}
+	while (!is_exist(s, max))
 	{
 		max--;
 	}
@@ -171,12 +201,24 @@ int			chaos_metric(t_stack *s)
 
 void	right_joggle(int throw_count)
 {
+	ft_printf("RIGHT = %d\n", throw_count);
+	/*ft_printf("MEDIANA = %d\n", get_fixed_division(g_b, throw_count / 2));
+	ft_printf("A\n");
+	print_stack(g_a);
+	ft_printf("B\n");
+	print_stack(g_b);*/
 	if (!throw_count)
+	{
 		return ;
-	if (throw_count < 3)
+	}
+	if (throw_count > (int)(g_b->size))
+	{
+		throw_count = (int)(g_b->size);
+	}
+	if (throw_count <= 3)
 	{
 		average_division_b(get_fixed_division(g_b, throw_count), throw_count);
-		quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
+		quicksort_ascending(g_a, 0, 1/*g_a->size - 1*/, &swap_i_j);
 	}
 	else
 	{
@@ -188,11 +230,23 @@ void	right_joggle(int throw_count)
 
 void	left_joggle(int throw_count)
 {
+	ft_printf("LEFT = %d\n", throw_count);
+	/*ft_printf("MEDIANA = %d\n", get_fixed_division(g_a, g_a->size - throw_count / 2));
+	ft_printf("A\n");
+	print_stack(g_a);
+	ft_printf("B\n");
+	print_stack(g_b);*/
 	if (!throw_count)
-		return ;
-	if (throw_count < 3)
 	{
-		quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
+		return ;
+	}
+	if (throw_count > (int)(g_a->size))
+	{
+		throw_count = (int)(g_a->size);
+	}
+	if (throw_count <= 3)
+	{
+		quicksort_ascending(g_a, 0, 1/*g_a->size - 1*/, &swap_i_j);
 	}
 	else
 	{
@@ -211,11 +265,20 @@ int		main(int ac, char **av)
 		{
 			log_descriptor = 1;
 			initialize(ac - 1, &(av[1]));
-			if (g_a->size <= 20)
+			if (g_a->size <= 10)
+			{
 				quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
+			}
 			else
 			{
 				left_joggle(g_a->size);
+				//quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
+				right_joggle(g_b->size);
+				while (g_b->size)
+				{
+					do_op(pa);
+					quicksort_ascending(g_a, 0, 1/*g_a->size - 1*/, &swap_i_j);
+				}
 				ft_printf("A\n");
 				print_stack(g_a);
 				ft_printf("B\n");

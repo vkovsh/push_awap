@@ -68,4 +68,5 @@ int				in_division(int board, t_stack *s);
 t_bool		    validate_stack_args(int size, char **args);
 void            left_joggle(int throw_count);
 void	        right_joggle(int throw_count);
+t_bool          is_exist(t_stack *s, int item);
 #endif
