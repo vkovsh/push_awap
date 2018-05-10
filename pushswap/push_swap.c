@@ -23,40 +23,21 @@ int		get_average(t_stack *s)
 
 void	average_division_a(int aver, int count)
 {
-	int		pivot;
-	t_bool	pivot_inited;
-	int		mawaru;
-
-	pivot_inited = FALSE;
-	mawaru = 0;
 	while (count)
 	{
+		//ft_printf("%10d:\n", get(g_a, 0));
 		if(get(g_a, 0) <= aver)
 		{
 			do_op(pb);
 			if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
 				(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
 				do_op(ss);
-			/*else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-				do_op(sb);
-			else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-				do_op(sa);*/
 			count--;
 		}
 		else
 		{
-			if (pivot_inited)
-			{
-				if (get(g_a, 0) == pivot)
-					break ;
-			}
-			else
-			{
-				pivot = get(g_a, 0);
-				pivot_inited = TRUE;
-			}
 			do_op(ra);
-			mawaru++;
+			(g_a->mawaru)++;
 		}
 	}
 	if (g_a->size && get(g_a, 0) <= aver)
@@ -64,59 +45,41 @@ void	average_division_a(int aver, int count)
 	if (g_a->size >= 2 && get(g_a, 1) <= aver)
 	{
 		do_op(ra);
-		mawaru++;
+		(g_a->mawaru)++;
 		do_op(pb);
 		if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
 			(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
 			do_op(ss);
 	}
-	//ft_printf("mawaru = %d\n", mawaru);
-	if (mawaru <= (int)(g_a->size / 3))
+	if (g_a->mawaru <= (int)(g_a->size / 3))
 	{
-		//ft_printf("mawaru = %d\n", mawaru);
-		while (mawaru--)
+		while (g_a->mawaru)
+		{
+			(g_a->mawaru)--;
 			do_op(rra);
+		}
 	}
-	//else
-		//ft_printf("mawaru = %d\n", mawaru);
+	else
+		g_a->mawaru = 0;
 }
 
 void	average_division_b(int aver, int count)
 {
-	int		pivot;
-	t_bool	pivot_inited;
-	int		mawaru;
-
-	mawaru = 0;
-	pivot_inited = FALSE;
 	while (count)
 	{
+		//ft_printf("%10d:\n", get(g_b, 0));
 		if(get(g_b, 0) >= aver)
 		{
 			do_op(pa);
 			if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
 				(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
 				do_op(ss);
-			/*else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-				do_op(sb);
-			else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-				do_op(sa);*/
 			count--;
 		}
 		else
 		{
-			if (pivot_inited)
-			{
-				if (get(g_b, 0) == pivot)
-					break ;
-			}
-			else
-			{
-				pivot = get(g_b, 0);
-				pivot_inited = TRUE;
-			}
 			do_op(rb);
-			mawaru++;
+			(g_b->mawaru)++;
 		}
 	}
 	if (g_b->size && get(g_b, 0) >= aver)
@@ -124,20 +87,22 @@ void	average_division_b(int aver, int count)
 	if (g_b->size >= 2 && get(g_b, 1) >= aver)
 	{
 		do_op(rb);
-		mawaru++;
+		(g_b->mawaru)++;
 		do_op(pa);
 		if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
 			(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
 			do_op(ss);
 	}
-	if (mawaru <= (int)(g_b->size) / 3)
+	if (g_b->mawaru <= (int)(g_b->size) / 3)
 	{
-		//ft_printf("mawaru = %d\n", mawaru);
-		while (mawaru--)
+		while (g_b->mawaru)
+		{
+			(g_b->mawaru)--;
 			do_op(rrb);
+		}
 	}
-	//else
-		//ft_printf("mawaru = %d\n", mawaru);
+	else
+		g_b->mawaru = 0;
 }
 
 int		get_optimal_division(t_stack *s)
@@ -201,58 +166,54 @@ int			chaos_metric(t_stack *s)
 
 void	right_joggle(int throw_count)
 {
-	ft_printf("RIGHT = %d\n", throw_count);
-	/*ft_printf("MEDIANA = %d\n", get_fixed_division(g_b, throw_count / 2));
+	/*ft_printf("RIGHT = %d\n", throw_count);
+	ft_printf("MEDIANA = %d\n", get_fixed_division(g_b, throw_count / 2));
 	ft_printf("A\n");
 	print_stack(g_a);
 	ft_printf("B\n");
 	print_stack(g_b);*/
 	if (!throw_count)
-	{
 		return ;
-	}
 	if (throw_count > (int)(g_b->size))
-	{
 		throw_count = (int)(g_b->size);
-	}
 	if (throw_count <= 3)
 	{
 		average_division_b(get_fixed_division(g_b, throw_count), throw_count);
-		quicksort_ascending(g_a, 0, 1/*g_a->size - 1*/, &swap_i_j);
+		quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
 	}
 	else
 	{
-		average_division_b(get_fixed_division(g_b, throw_count / 2), throw_count / 2);
-		left_joggle(throw_count / 2);
-		right_joggle(throw_count / 2);
+		int half_max;
+		half_max = throw_count / 2;
+		average_division_b(get_fixed_division(g_b, half_max), half_max);
+		left_joggle(half_max);
+		right_joggle(half_max);
 	}
 }
 
 void	left_joggle(int throw_count)
 {
-	ft_printf("LEFT = %d\n", throw_count);
-	/*ft_printf("MEDIANA = %d\n", get_fixed_division(g_a, g_a->size - throw_count / 2));
+	/*ft_printf("LEFT = %d\n", throw_count);
+	ft_printf("MEDIANA = %d\n", get_fixed_division(g_a, g_a->size - throw_count / 2));
 	ft_printf("A\n");
 	print_stack(g_a);
 	ft_printf("B\n");
 	print_stack(g_b);*/
 	if (!throw_count)
-	{
 		return ;
-	}
 	if (throw_count > (int)(g_a->size))
-	{
 		throw_count = (int)(g_a->size);
-	}
 	if (throw_count <= 3)
 	{
-		quicksort_ascending(g_a, 0, 1/*g_a->size - 1*/, &swap_i_j);
+		quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
 	}
 	else
 	{
-		average_division_a(get_fixed_division(g_a, g_a->size - throw_count / 2), throw_count / 2);
-		left_joggle(throw_count / 2);
-		right_joggle(throw_count / 2);
+		int half_max;
+		half_max = throw_count / 2;
+		average_division_a(get_fixed_division(g_a, g_a->size - half_max), half_max);
+		left_joggle(half_max);
+		right_joggle(half_max);
 	}
 }
 
@@ -272,12 +233,11 @@ int		main(int ac, char **av)
 			else
 			{
 				left_joggle(g_a->size);
-				//quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
 				right_joggle(g_b->size);
 				while (g_b->size)
 				{
 					do_op(pa);
-					quicksort_ascending(g_a, 0, 1/*g_a->size - 1*/, &swap_i_j);
+					quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
 				}
 				ft_printf("A\n");
 				print_stack(g_a);
@@ -285,73 +245,6 @@ int		main(int ac, char **av)
 				print_stack(g_b);
 				ft_printf("CHAOS A = %d\n", chaos_metric(g_a));
 				ft_printf("CHAOS B = %d\n", chaos_metric(g_b));
-				
-				
-				//ft_printf("ddd = %d\n", get_fixed_division(g_a, g_a->size - size / 4));
-				/*
-				average_division_a(get_fixed_division(g_a, 2 * g_a->size / 3), g_a->size / 3);
-				while (g_b->size >= 10)
-					average_division_b(get_fixed_division(g_b, g_b->size / 3), g_b->size / 3);
-				while (g_a->size >= 10)
-					average_division_a(get_fixed_division(g_a, 2 * g_a->size / 3), g_a->size / 3);
-				average_division_a(get_fixed_division(g_a, 5), 5);
-				quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
-				while (g_b->size >= 3)
-				{
-					int mawaru = 0;
-					int division = get_fixed_division(g_b, 3);
-					int k = 3;
-					while (k)
-					{
-						if (get(g_b, 0) >= division)
-						{
-							do_op(pa);
-							quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
-							if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
-								(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
-								do_op(ss);
-							else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-								do_op(sb);
-							else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-								do_op(sa);
-							k--;
-						}
-						else
-						{
-							if (get(g_b, 1) >= division)
-							{
-								if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-									do_op(ss);
-								else
-									do_op(sb);
-								do_op(pa);
-								k--;
-							}
-							else
-							{
-								mawaru++;
-								do_op(rb);
-							}
-						}
-					}
-					
-					while (mawaru--)
-					{
-						do_op(rrb);
-						if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
-							(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
-							do_op(ss);
-						else if (g_b->size >= 2 && get(g_b, 0) < get(g_b, 1))
-							do_op(sb);
-						else if (g_a->size >= 2 && get(g_a, 0) > get(g_a, 1))
-							do_op(sa);
-					}
-					
-				}
-				while (g_b->size)
-					do_op(pa);
-				quicksort_ascending(g_a, 0, g_a->size - 1, &swap_i_j);
-			*/
 			}
 			
 		}

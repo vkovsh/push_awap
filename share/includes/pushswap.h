@@ -15,6 +15,7 @@
 # include "ft_printf.h"
 # include <fcntl.h>
 # include <time.h>
+# include <math.h>
 
 extern struct s_stack	*g_a;
 extern struct s_stack	*g_b;
@@ -25,6 +26,7 @@ typedef struct	s_stack
 {
 	size_t      size;
 	size_t      head_pointer;
+    int         mawaru;
 	t_list      *stack_content;
 }				t_stack;
 

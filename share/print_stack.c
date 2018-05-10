@@ -6,13 +6,12 @@ void        print_stack(t_stack *stack)
     int     i;
 
     items = stack->stack_content;
-    i = 0;
+    i = 1;
     while (items)
     {
         ft_dprintf(log_descriptor,
-            "%10d%10s%10d\n", i, "--->",
+            "%10d%10s%10d\n", i++, "--->",
             *((int *)(items->content)));
-        i++;
         items = items->next;
     }
 

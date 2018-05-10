@@ -15,7 +15,7 @@ RAND_BIN_NAME		=	rand
 CHECKER_BIN_NAME	=	checker
 
 CC 					=	gcc
-CC_FLAGS			=	-g -Wall -Werror -Wextra
+CC_FLAGS			=	-g -Wall -Werror -Wextra -lm
 
 PS_PATH 			=	./pushswap/
 RAND_PATH			=	./randomizer/
