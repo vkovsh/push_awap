@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   get_fixed_division.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkovsh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/16 13:51:11 by vkovsh            #+#    #+#             */
-/*   Updated: 2018/05/16 13:51:56 by vkovsh           ###   ########.fr       */
+/*   Created: 2018/05/16 15:32:43 by vkovsh            #+#    #+#             */
+/*   Updated: 2018/05/16 15:32:45 by vkovsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void		push(t_stack *stack, int element)
+int		get_fixed_division(t_stack *s, int number)
 {
-	t_list	*new_elem;
+	int	max;
 
-	new_elem = ft_lstnew(&element, sizeof(int));
-	ft_lstadd(&(stack->stack_content), new_elem);
-	stack->size++;
+	max = get_max(s);
+	while (in_division(max, s) < number)
+		max--;
+	while (!is_exist(s, max))
+		max--;
+	return (max);
 }

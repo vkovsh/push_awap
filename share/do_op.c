@@ -12,7 +12,7 @@
 
 #include "pushswap.h"
 
-int log_descriptor;
+int g_descriptor;
 
 static inline void	swap_both(void)
 {
@@ -56,5 +56,5 @@ void				do_op(t_operation op)
 		rev_rotate(g_b);
 	else if (op == rrr)
 		rev_rotate_both();
-	ft_dprintf(log_descriptor, "%s\n", get_operation_by_id(op));
+	ft_dprintf(g_descriptor, "%s\n", get_operation_by_id(op));
 }

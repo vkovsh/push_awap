@@ -13,9 +13,9 @@
 #include "ft_printf.h"
 #include <time.h>
 
-t_bool		is_unique(int tmp, int *arr, int counter)
+static inline t_bool	is_unique(int tmp, int *arr, int counter)
 {
-	int		i;
+	int					i;
 
 	i = -1;
 	while (++i < counter)
@@ -24,50 +24,51 @@ t_bool		is_unique(int tmp, int *arr, int counter)
 	return (TRUE);
 }
 
-int			main(int ac, char **av)
+static inline void		fill_output(int *output, int count, int limit)
 {
-    time_t	t;
-	int		sign;
-	int		count;
-	int		limit;
-	int		*output;
-	int		tmp;
+	int					i;
+	int					tmp;
+
+	i = 0;
+	tmp = 0;
+	while (i < count)
+	{
+		tmp = (rand() % limit) * ((rand() % 2) ? -1 : 1);
+		if (is_unique(tmp, output, i))
+			output[i++] = tmp;
+	}
+}
+
+static inline void		print_output(int *output, int count)
+{
+	int					i;
+
+	i = -1;
+	while (++i < count)
+		ft_printf("%d ", output[i]);
+	ft_putchar('\n');
+}
+
+int						main(int ac, char **av)
+{
+	time_t				t;
+	int					count;
+	int					limit;
+	int					*output;
 
 	if (ac >= 2)
 	{
-		if (!ft_aredigits(av[1]))
-			ft_printf("Error\n");
+		srand((unsigned)time(&t));
+		count = ft_atoi(av[1]);
+		output = ft_memalloc(sizeof(int) * count);
+		ft_bzero(output, sizeof(int) * count);
+		if (ac == 3)
+			limit = ft_atoi(av[2]);
 		else
-		{
-    		srand((unsigned)time(&t));
-			if (ft_aredigits(av[1]))
-			{
-				count = ft_atoi(av[1]);
-				output = ft_memalloc(sizeof(int) * count);
-				ft_bzero(output, sizeof(int) * count);
-				if (ac == 3)
-					limit = ft_atoi(av[2]);
-				else
-					limit = count * 2;
-				int i = 0;
-				while (i < count)
-				{
-					sign = (rand() % 2) ? -1 : 1;
-					tmp = (rand() % limit) * sign;
-					if (is_unique(tmp, output, i))
-						output[i++] = tmp;
-				}
-				i = -1;
-				while (++i < count)
-					ft_printf("%d ", output[i]);
-				ft_putchar('\n');
-			}
-		}
+			limit = count * 2;
+		fill_output(output, count, limit);
+		print_output(output, count);
+		free(output);
 	}
-	else
-	{
-		ft_printf("Usage: ./rand <count> <limit>\n");
-		ft_printf("count of randomly generated numbers\n");
-	}
-    return (0);
+	return (0);
 }

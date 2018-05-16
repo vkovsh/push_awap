@@ -15,7 +15,7 @@ RAND_BIN_NAME		=	rand
 CHECKER_BIN_NAME	=	checker
 
 CC 					=	gcc
-CC_FLAGS			=	-g -Wall -Werror -Wextra -lm
+CC_FLAGS			=	-Wall -Werror -Wextra
 
 PS_PATH 			=	./pushswap/
 RAND_PATH			=	./randomizer/
@@ -54,27 +54,32 @@ PS_NAME				=	push_swap.c
 
 RAND_NAME			=	randomizer.c
 
-SHARE_NAME			=	initialize.c			\
-						push.c					\
-						pop.c					\
-						push_pop.c				\
-						swap.c					\
-						is_empty.c 				\
-						rotate.c 				\
-						rev_rotate.c			\
-						do_op.c					\
-						is_ascending.c			\
-						is_descending.c 		\
-						print_stack.c 			\
-						swap_i_j.c				\
-						get_operation_by_id.c	\
-						quicksort.c 			\
-						get.c					\
-						get_min_max.c			\
-						in_division.c			\
-						get_id_by_operation.c	\
-						validate_stack_args.c	\
-						is_exist.c		
+SHARE_NAME			=	initialize.c				\
+						push.c						\
+						pop.c						\
+						push_pop.c					\
+						swap.c						\
+						is_empty.c 					\
+						rotate.c 					\
+						rev_rotate.c				\
+						do_op.c						\
+						is_ascending.c				\
+						is_descending.c 			\
+						print_stack.c 				\
+						swap_i_j.c					\
+						get_operation_by_id.c		\
+						quicksort.c 				\
+						get.c						\
+						get_min_max.c				\
+						in_division.c				\
+						get_id_by_operation.c		\
+						validate_stack_args.c		\
+						is_exist.c					\
+						left_joggle.c				\
+						right_joggle.c				\
+						average_division.c			\
+						get_fixed_division.c		\
+						optimisation_condition.c
 
 all: $(PS_BIN_NAME) $(RAND_BIN_NAME) $(CHECKER_BIN_NAME)
 

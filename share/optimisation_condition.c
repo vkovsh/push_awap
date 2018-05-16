@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   optimisation_condition.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkovsh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/16 13:51:11 by vkovsh            #+#    #+#             */
-/*   Updated: 2018/05/16 13:51:56 by vkovsh           ###   ########.fr       */
+/*   Created: 2018/05/16 15:51:04 by vkovsh            #+#    #+#             */
+/*   Updated: 2018/05/16 15:51:06 by vkovsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void		push(t_stack *stack, int element)
+void	optimisation_condition(void)
 {
-	t_list	*new_elem;
-
-	new_elem = ft_lstnew(&element, sizeof(int));
-	ft_lstadd(&(stack->stack_content), new_elem);
-	stack->size++;
+	if ((g_b->size >= 2 && get(g_b, 0) < get(g_b, 1)) &&
+		(g_a->size >= 2 && get(g_a, 0) > get(g_a, 1)))
+	{
+		do_op(ss);
+	}
 }

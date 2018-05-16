@@ -14,7 +14,7 @@
 
 t_operation		get_id_by_operation(const char *op_name)
 {
-    if (!ft_strcmp("sa", op_name))
+	if (!ft_strcmp("sa", op_name))
 		return (sa);
 	else if (!ft_strcmp("sb", op_name))
 		return (sb);
